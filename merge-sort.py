@@ -1,5 +1,3 @@
-from pprint import pprint
-
 def merge(list0, list1):
     """Merge two sorted lists of numbers to produce a single sorted list of numbers.
 
@@ -12,11 +10,10 @@ def merge(list0, list1):
     len0, len1 = len(list0), len(list1)
 
     while ((index0 < len0) and (index1 < len1)):
-        while ((index0 < len0) and (index1 < len1)) and (list0[index0] <= list1[index1]):
+        if list0[index0] <= list1[index1]:
             newList.append(list0[index0])
             index0 = index0 + 1
-
-        while ((index0 < len0) and (index1 < len1)) and (list1[index1] <= list0[index0]):
+        else:
             newList.append(list1[index1])
             index1 = index1 + 1
 
@@ -34,7 +31,7 @@ def mergeSort(list):
     """Sort the passed in list as per the standard merge sort algorithm
 
     Arguments:
-        list - List of numbers
+        list - List of numbers.
     """
     if len(list) == 0 or len(list) == 1:
         return list

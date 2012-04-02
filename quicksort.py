@@ -1,15 +1,18 @@
-import random
 import pprint
 
 class QuickSort:
     def sort(self, nos):
+        self.comparisionCount = 0
         return self.quickSortHelper(nos, 0, len(nos) - 1)
 
     def quickSortHelper(self, nos, startIndex, endIndex):
-        if startIndex == endIndex or startIndex > endIndex:
+        if endIndex - startIndex <= 0:
             return nos
         else:
+            #print "End index:{0}, Start index:{1}".format(endIndex, startIndex)
+            self.comparisionCount = self.comparisionCount + (endIndex - startIndex)
             pivotIndex = self.getPivotIndex(nos, startIndex, endIndex) 
+            #print "Pivot index is:", pivotIndex
             self.swap(nos, startIndex, pivotIndex)
             pivot = nos[startIndex]
 
@@ -21,24 +24,18 @@ class QuickSort:
                     lesserThanPivotIndex = lesserThanPivotIndex + 1
 
             self.swap(nos, startIndex, lesserThanPivotIndex - 1)
+            #pprint.pprint(nos)
+            #print ""
 
             self.quickSortHelper(nos, startIndex, lesserThanPivotIndex - 2)
             self.quickSortHelper(nos, lesserThanPivotIndex, endIndex)
         return nos
 
     def getPivotIndex(self, nos, startIndex, endIndex):
-        return random.randint(startIndex, endIndex)
+        pass
 
     def swap(self, nos, index0, index1):
         nos[index0], nos[index1] = nos[index1], nos[index0]
 
-import unittest
-class TestQuickSort(unittest.TestCase):
-    def test(self):
-        quickSort = QuickSort()
-        self.assertEqual(quickSort.sort([0, 5, 17]), [0, 5, 17])
-        self.assertEqual(quickSort.sort([5, 4, 3, 2, 1]), [1, 2, 3, 4, 5])
-        self.assertEqual(quickSort.sort([]), [])
-
-if __name__ == '__main__':
-    unittest.main()
+    def getComparisionCount(self):
+        return self.comparisionCount

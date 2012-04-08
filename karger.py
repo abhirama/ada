@@ -1,6 +1,8 @@
 import pprint
 import random
 
+#todo - very sloppily written, lots of refactoring needed.
+
 def contract(graph, vertex0, vertex1):
     adjecents0 = graph[vertex0]
     adjecents1 = graph[vertex1]
@@ -36,31 +38,38 @@ def contract(graph, vertex0, vertex1):
                 del value[value.index(key)]
                 count = count - 1
 
-fh = open('kargerAdj.txt')
+mins = []
+count = 100
 
-lines = fh.readlines()
+while count > 0:
+    fh = open('kargerAdj.txt')
 
-graph = {}
-for line in lines:
-    vertices = line.split()
-    graph[vertices[0]] = vertices[1:]
+    lines = fh.readlines()
 
-pprint.pprint(graph)
+    graph = {}
+    for line in lines:
+        vertices = line.split()
+        graph[vertices[0]] = vertices[1:]
 
-while len(graph.keys()) > 2:
-    randVertex0 = graph.keys()[random.randint(0, len(graph.keys()) - 1)]
-    adjecents = graph[randVertex0]
-    randVertex1 = adjecents[random.randint(0, len(adjecents) - 1)]
-
-    #print "Contraction candidates: {0} - {1}".format(randVertex0, randVertex1)
     #pprint.pprint(graph)
 
-    contract(graph, randVertex0, randVertex1)
+    while len(graph.keys()) > 2:
+        randVertex0 = graph.keys()[random.randint(0, len(graph.keys()) - 1)]
+        adjecents = graph[randVertex0]
+        randVertex1 = adjecents[random.randint(0, len(adjecents) - 1)]
 
-#pprint.pprint(graph)
+        #print "Contraction candidates: {0} - {1}".format(randVertex0, randVertex1)
+        #pprint.pprint(graph)
 
-minimumCuts = 0
-for values in graph.values():
-    minimumCuts = minimumCuts + len(values)
+        contract(graph, randVertex0, randVertex1)
 
-print minimumCuts
+    #pprint.pprint(graph)
+
+    minimumCuts = 0
+    for values in graph.values():
+        mins.append(len(values))
+        break
+
+    count = count - 1
+
+print min(mins)

@@ -40,13 +40,10 @@ def dfs(vert, seen, timeMap):
     if vert in fMap:
         edges = fMap[vert] 
         for edge in edges:
-            if not dfs(edge[1], seen, timeMap):
-                _timer = _timer + 1
-                timeMap[vert] = _timer
+            dfs(edge[1], seen, timeMap)
 
-        if not vert in timeMap:
-            _timer = _timer + 1
-            timeMap[vert] = _timer
+        _timer = _timer + 1
+        timeMap[vert] = _timer
         return True
     else:
         return False 

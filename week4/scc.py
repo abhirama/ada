@@ -1,6 +1,6 @@
 import pprint
 
-def addToMap(mp, tail, head):
+def createGraph(mp, tail, head):
     if tail in mp: 
         mp[tail].append((tail, head))
     else:
@@ -23,8 +23,8 @@ for line in lines:
     v0 = long(vertices[0])
     v1 = long(vertices[1])
 
-    addToMap(fGraph, v0, v1)
-    addToMap(rGraph, v1, v0)
+    createGraph(fGraph, v0, v1)
+    createGraph(rGraph, v1, v0)
 
     mxVert = max(mxVert, v0, v1)
 

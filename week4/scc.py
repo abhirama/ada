@@ -10,9 +10,9 @@ fh = open('small.txt')
 
 lines = fh.readlines()
 
-fMap = {}
+fGraph = {}
 
-rMap = {}
+rGraph = {}
 
 mxVert = 0
 
@@ -23,24 +23,23 @@ for line in lines:
     v0 = long(vertices[0])
     v1 = long(vertices[1])
 
-    addToMap(fMap, v0, v1)
-    addToMap(rMap, v1, v0)
+    addToMap(fGraph, v0, v1)
+    addToMap(rGraph, v1, v0)
 
     mxVert = max(mxVert, v0, v1)
 
 
-_timer = 0
-def dfs(vert, seen, timeMap):
+def dfsForTime(vert, seen, timeMap):
     if vert in seen:
         return False 
         
     seen.add(vert)
 
     global _timer
-    if vert in fMap:
-        edges = fMap[vert] 
+    if vert in fGraph:
+        edges = fGraph[vert] 
         for edge in edges:
-            dfs(edge[1], seen, timeMap)
+            dfsForTime(edge[1], seen, timeMap)
 
         _timer = _timer + 1
         timeMap[vert] = _timer
@@ -53,8 +52,9 @@ def dfs(vert, seen, timeMap):
 seen = set()
 timeMap = {}
 
+_timer = 0
 for vert in reversed(xrange(1, mxVert + 1)):
-   if not dfs(vert, seen, timeMap):
+   if not dfsForTime(vert, seen, timeMap):
         if not vert in timeMap:
             _timer = _timer + 1
             timeMap[vert] = _timer

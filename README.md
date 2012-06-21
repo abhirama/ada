@@ -1,2 +1,1 @@
-ada
-===
+Solutions for coursera's <a href='https://class.coursera.org/algo/class/index'>analysis and design of algorithms</a> problem set.
